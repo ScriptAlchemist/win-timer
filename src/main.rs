@@ -12,6 +12,9 @@ use tui::{
     Terminal
 };
 
+#[cfg(target_os = "macos")]
+use std::process::Command;
+
 #[cfg(windows)]
 use winapi::um::utilapiset::Beep;
 
