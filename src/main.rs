@@ -11,6 +11,8 @@ use tui::{
     widgets::{Block, Borders, Gauge},
     Terminal
 };
+
+#[cfg(windows)]
 use winapi::um::utilapiset::Beep;
 
 fn main() {
@@ -112,12 +114,29 @@ fn main() {
 						}).unwrap();
 						std::thread::sleep(Duration::from_secs(1));
 				}
-
+        
+        #[cfg(windows)]
 				unsafe {
 						Beep(440, 500);
 						Beep(400, 800);
 						Beep(440, 500);
 				}
+
+        #[cfg(target_os = "macos")]
+        command::new("tput").arg("bel").output().expect("failed to play sound.");
+        #[cfg(target_os = "macos")]
+        command::new("tput").arg("bel").output().expect("failed to play sound.");
+        #[cfg(target_os = "macos")]
+        command::new("tput").arg("bel").output().expect("failed to play sound.");
+
+        #[cfg(target_os = "linux")]
+        print!("\x07");
+        #[cfg(target_os = "linux")]
+        print!("\x07");
+        #[cfg(target_os = "linux")]
+        print!("\x07");
+
+
             // restore terminal
 						let result = disable_raw_mode();
             result.unwrap_or_else(|e| {
