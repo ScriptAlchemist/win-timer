@@ -1,5 +1,7 @@
 # win-timer
 
+![t-shirt-design-template-inspired-by-minecraft-with-an-8-bit-style-illustrated-tomato-4523e (3)](https://user-images.githubusercontent.com/28788001/217974780-26214d69-e438-4e9a-8945-921c7dda27d8.png)
+
 A "pomodoro" designed timer to keep track of productivity. Stay focused by breaking apart your useful time.
 
 I use Windows 10. This is designed around Windows because it uses the winapi to pull out the Beeps.
