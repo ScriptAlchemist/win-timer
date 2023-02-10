@@ -4,7 +4,10 @@
 
 A "pomodoro" designed timer to keep track of productivity. Stay focused by breaking apart your useful time.
 
-I use Windows 10. This is designed around Windows because it uses the winapi to pull out the Beeps.
+I use Windows 10. This is designed around Windows because it uses the
+winapi to pull out the Beeps. It may compile for macos and linux. I
+added the #[cfg(target_os = "macos")] to only compile on certain build.
+The beeps currently don't work on MacOS from my test.
 
 ```
 use winapi::um:utilapiset::Beep;

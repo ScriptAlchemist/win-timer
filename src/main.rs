@@ -126,11 +126,11 @@ fn main() {
 				}
 
         #[cfg(target_os = "macos")]
-        command::new("tput").arg("bel").output().expect("failed to play sound.");
+        Command::new("tput").arg("bel").output().expect("failed to play sound.");
         #[cfg(target_os = "macos")]
-        command::new("tput").arg("bel").output().expect("failed to play sound.");
+        Command::new("tput").arg("bel").output().expect("failed to play sound.");
         #[cfg(target_os = "macos")]
-        command::new("tput").arg("bel").output().expect("failed to play sound.");
+        Command::new("tput").arg("bel").output().expect("failed to play sound.");
 
         #[cfg(target_os = "linux")]
         print!("\x07");
