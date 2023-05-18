@@ -85,7 +85,7 @@ fn main() {
 
         let gauge = Gauge::default()
             .block(Block::default().title("🍅- q: quit").borders(Borders::ALL))
-            .style(Style::default().fg(Color::White).bg(Color::Red))
+            .style(Style::default().fg(Color::White).bg(Color::Black))
             .ratio(elapsed_time_fraction)
             .label(format!("{:02}h:{:02}m:{:02}s", remaining_hours, remaining_minutes, remaining_seconds));
 
@@ -127,15 +127,7 @@ fn main() {
 
         #[cfg(target_os = "macos")]
         Command::new("tput").arg("bel").output().expect("failed to play sound.");
-        #[cfg(target_os = "macos")]
-        Command::new("tput").arg("bel").output().expect("failed to play sound.");
-        #[cfg(target_os = "macos")]
-        Command::new("tput").arg("bel").output().expect("failed to play sound.");
 
-        #[cfg(target_os = "linux")]
-        print!("\x07");
-        #[cfg(target_os = "linux")]
-        print!("\x07");
         #[cfg(target_os = "linux")]
         print!("\x07");
 
@@ -159,6 +151,5 @@ fn main() {
             });
 
 				println!("\nTimer ended");
-				
 }
 
