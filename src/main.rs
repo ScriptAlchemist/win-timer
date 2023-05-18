@@ -1,15 +1,18 @@
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
     execute,
-    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen}
+    terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
-use std::{env, time::{Duration, Instant}, io};
+use std::{
+    env, io,
+    time::{Duration, Instant},
+};
 use tui::{
     backend::CrosstermBackend,
     layout::{Constraint, Direction, Layout},
     style::{Color, Style},
     widgets::{Block, Borders, Gauge},
-    Terminal
+    Terminal,
 };
 
 #[cfg(target_os = "macos")]
@@ -87,7 +90,10 @@ fn main() {
             .block(Block::default().title("🍅- q: quit").borders(Borders::ALL))
             .style(Style::default().fg(Color::White).bg(Color::Black))
             .ratio(elapsed_time_fraction)
-            .label(format!("{:02}h:{:02}m:{:02}s", remaining_hours, remaining_minutes, remaining_seconds));
+            .label(format!(
+                "{:02}h:{:02}m:{:02}s",
+                remaining_hours, remaining_minutes, remaining_seconds
+            ));
 
         if event::poll(Duration::from_millis(100)).unwrap() {
             match event::read().unwrap() {
@@ -106,50 +112,53 @@ fn main() {
                 _ => {}
             }
         }
-				terminal.draw(|f| {
-								let size = f.size();
-								let layout = Layout::default()
-										.direction(Direction::Vertical)
-										.constraints([Constraint::Percentage(100)].as_ref())
-										.split(size);
+        terminal
+            .draw(|f| {
+                let size = f.size();
+                let layout = Layout::default()
+                    .direction(Direction::Vertical)
+                    .constraints([Constraint::Percentage(100)].as_ref())
+                    .split(size);
 
-								f.render_widget(gauge, layout[0]);
-						}).unwrap();
-						std::thread::sleep(Duration::from_secs(1));
-				}
-        
-        #[cfg(windows)]
-				unsafe {
-						Beep(440, 500);
-						Beep(400, 800);
-						Beep(440, 500);
-				}
+                f.render_widget(gauge, layout[0]);
+            })
+            .unwrap();
+        std::thread::sleep(Duration::from_secs(1));
+    }
 
-        #[cfg(target_os = "macos")]
-        Command::new("tput").arg("bel").output().expect("failed to play sound.");
+    #[cfg(windows)]
+    unsafe {
+        Beep(440, 500);
+        Beep(400, 800);
+        Beep(440, 500);
+    }
 
-        #[cfg(target_os = "linux")]
-        print!("\x07");
+    #[cfg(target_os = "macos")]
+    Command::new("tput")
+        .arg("bel")
+        .output()
+        .expect("failed to play sound.");
 
+    #[cfg(target_os = "linux")]
+    print!("\x07");
 
-            // restore terminal
-						let result = disable_raw_mode();
-            result.unwrap_or_else(|e| {
-                println!("Error while executing disable raw mode {:?}", e);
-            });
-						let result = execute!(
-								terminal.backend_mut(),
-								LeaveAlternateScreen,
-								DisableMouseCapture
-						);
-            result.unwrap_or_else(|e| {
-                println!("Error while executing close macros {:?}", e);
-            });
-						let result = terminal.show_cursor();
-            result.unwrap_or_else(|e| {
-                println!("Error while executing terminal show cursor {:?}", e);
-            });
+    // restore terminal
+    let result = disable_raw_mode();
+    result.unwrap_or_else(|e| {
+        println!("Error while executing disable raw mode {:?}", e);
+    });
+    let result = execute!(
+        terminal.backend_mut(),
+        LeaveAlternateScreen,
+        DisableMouseCapture
+    );
+    result.unwrap_or_else(|e| {
+        println!("Error while executing close macros {:?}", e);
+    });
+    let result = terminal.show_cursor();
+    result.unwrap_or_else(|e| {
+        println!("Error while executing terminal show cursor {:?}", e);
+    });
 
-				println!("\nTimer ended");
+    println!("\nTimer ended");
 }
-
